@@ -10,6 +10,7 @@ describe("Amazone shopping site", () => {
 
     it("product filtering",async () => {
         await E2Emethod.productFilter();
+        console.log("filter")
         
     })
 
