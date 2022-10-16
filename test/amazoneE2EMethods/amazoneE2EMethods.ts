@@ -16,31 +16,68 @@ class E2EMethods {
         await action.setText(locator.password, password)
         await browser.pause(3000)
         await action.Click(locator.signInButton)
-        await browser.pause(10000)
-       
-
-
+        await browser.pause(5000)
     }
-    productFilter=async () => {
-        
-
-        for(let i=0;i< (await locator.productCategory).length;i++){
-           const mainProduct= await locator.productCategory[i].getText();
-           console.log("product",mainProduct)
-           if(mainProduct.includes("Electronics")){
-            await action.Click(await locator.productCategory[i])
-            await browser.pause(3000)
-           }
-        }
-        for(let i=0;i<( await locator.productSubCategory).length;i++){
-            const mainProduct= await (await locator.productSubCategory[i]).getText();
-            console.log("product",mainProduct)
-            if(mainProduct.includes("Mobiles & Accessories")){
-             await action.Click(await locator.productSubCategory[i])
-             await browser.pause(6000)
+    categoryFilter = async (category: string, subCatrgory: string) => {
+        await action.LocatorArray(locator.productCategory, category);
+        await browser.pause(3000)
+        await action.LocatorArray(locator.productSubCategory, subCatrgory)
+        await browser.pause(3000)
+    }
+    specificProductFilter = async (selectfilter: string) => {
+        await action.LocatorArray(locator.filterProductSection, selectfilter)
+        await browser.pause(3000)
+    }
+    selectSpecificProduct = async (productName: string) => {
+        let parentWindow = await browser.getWindowHandle();
+        await action.LocatorArray(locator.clickSpecificProduct, productName);
+        await browser.pause(3000)
+        let alltabId = await browser.getWindowHandles()
+        let childTab: string;
+        for (let i = 0; i < (await alltabId).length; i++) {
+            if (alltabId[i] != parentWindow) {
+                childTab = alltabId[i]
+                break
             }
-         }
-        
+        }
+        await browser.switchToWindow(childTab)
+        await browser.maximizeWindow()
+        await browser.pause(3000)
+        await action.Click(locator.addToCartButton)
+        await browser.pause(3000)
+    }
+    cartMessage = async (message: string) => {
+        const toastMessage = await action.GetText(locator.addedToCartText);
+        expect(message).toContain(String(toastMessage))
+    }
+    cartItems = async () => {
+        await (await locator.gotoCart).waitForClickable({ timeout: 2000 })
+        await action.Click(locator.gotoCart)
+        await browser.pause(3000)
+    }
+    proceedToBuy = async () => {
+        await action.Click(locator.proceedToBuy)
+        await browser.pause(3000)
+    }
+    // EditAddress =async (street:string) => {
+    //     await action.LocatorArray(locator.addressEdit,'Edit')
+    //    await browser.pause(2000)
+    //     await action.setText(locator.street,street)
+    //     await browser.pause(1000)
+    //     await action.Click(locator.useThisAddress)
+    //     await browser.pause(6000)
+    // }
+    address = async () => {
+        await action.Click(locator.deliveryToAddress)
+        await browser.pause(3000)
+    }
+    payMentOption = async (bankName: string) => {
+        await (await locator.spinner).waitForDisplayed({ timeout: 5000, reverse: true })
+        await action.Click(locator.netBanking)
+        await action.Click(locator.chooseBank)
+        await action.LocatorArray(locator.allBank, bankName)
+        await browser.pause(3000)
+        //   await action.Click(locator.continueToReview)
     }
 }
 export default new E2EMethods()
