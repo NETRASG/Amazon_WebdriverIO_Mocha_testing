@@ -18,14 +18,19 @@ class E2EMethods {
         await action.Click(locator.signInButton)
         await browser.pause(5000)
     }
-    categoryFilter = async (category: string, subCatrgory: string) => {
-        await action.LocatorArray(locator.productCategory, category);
+   
+    categoryFilter = async (map:Map<string,string>) => {
+        await action.LocatorArray(locator.productCategory, map.get("category"));
         await browser.pause(3000)
-        await action.LocatorArray(locator.productSubCategory, subCatrgory)
+        await action.LocatorArray(locator.productSubCategory, map.get("subCategory"))
         await browser.pause(3000)
     }
-    specificProductFilter = async (selectfilter: string) => {
-        await action.LocatorArray(locator.filterProductSection, selectfilter)
+    specificProductFilter = async (map:Map<string,string>) => {
+        await action.LocatorArray(locator.filterProductSection, map.get("brand"))
+        await action.LocatorArray(locator.filterProductSection, map.get("rating"))
+        await action.LocatorArray(locator.filterProductSection, map.get("price"))
+        await action.LocatorArray(locator.filterProductSection, map.get("itemCondition"))
+
         await browser.pause(3000)
     }
     selectSpecificProduct = async (productName: string) => {
