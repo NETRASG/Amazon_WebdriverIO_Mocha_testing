@@ -1,13 +1,14 @@
 import E2Emethod from '../amazoneE2EMethods/amazoneE2EMethods'
+import {appOpen,sigIn} from '../amazoneE2EMethods/helper'
 import data from '../resources/userCredential.json'
 import filterData from '../resources/filterData.json'
 import { map } from '../utils/mapfunction'
 describe("Amazone shopping site", () => {
     it("Open web app using appUrl", async () => {
-        await E2Emethod.appOpen()
+        await appOpen()
     })
     it("get sign in into the app using phone number and password", async () => {
-        await E2Emethod.sigIn(data.phonenum, data.password);
+        await sigIn(data.phonenum, data.password);
     })
     it("product filtering", async () => {
         await E2Emethod.categoryFilter(map);
