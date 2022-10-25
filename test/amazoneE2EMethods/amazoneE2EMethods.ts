@@ -57,11 +57,12 @@ class E2EMethods {
     //     await browser.pause(6000)
     // }
     address = async () => {
-        await action.Click(locator.deliveryToAddress)
+        await action.Click(locator.useThisAddress)
         await browser.pause(3000)
     }
     payMentOption = async (bankName: string) => {
-        await (await locator.spinner).waitForDisplayed({ timeout: 5000, reverse: true })
+        await (await locator.SettingAddres).waitForDisplayed({ timeout: 5000, reverse: true })
+        await (await locator.netBanking).scrollIntoView()
         await action.Click(locator.netBanking)
         await action.Click(locator.chooseBank)
         await action.LocatorArray(locator.allBank, bankName)

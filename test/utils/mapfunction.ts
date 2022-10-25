@@ -1,4 +1,5 @@
 import data from '../resources/filterData.json'
+import filterdata from '../interfaceFilterData'
 export const map= new Map()
 map.set("category",data.categoty)
 map.set("subCategory",data.subCategory)
