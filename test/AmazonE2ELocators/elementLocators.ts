@@ -51,7 +51,7 @@ class EleLocators {
         return $("#address-ui-widgets-enterAddressLine2")
     }
     get useThisAddress() {
-        return $("#address-ui-widgets-form-submit-button-announce")
+        return $("//input[@data-testid='Address_selectShipToThisAddress']")
     }
     get payOnDelivery() {
         return $("#pp-5rzII9-130")
@@ -76,6 +76,9 @@ class EleLocators {
     }
     get continueToReview() {
         return $("#pp-P7zHNQ-133-announce")
+    }
+    get SettingAddres(){
+        return $("//span[contains(text(),'Setting your shipping address...')]")
     }
 }
 export default new EleLocators()
